@@ -1,0 +1,236 @@
+/* style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(to bottom, #003300 0%, #006600 100%);
+  overflow-x: hidden;
+  color: #eee;
+  user-select: none;
+  height: 100vh;
+}
+
+#calendar-container {
+  position: relative;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(20, 60, 20, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 0 25px #229922;
+  overflow: hidden;
+}
+
+#calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.case {
+  background: linear-gradient(145deg, #267326, #164816);
+  border-radius: 12px;
+  border: 2px solid #2ecc71;
+  box-shadow: inset 0 0 6px #33bb33;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #dbf3db;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 100px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  perspective: 600px;
+  position: relative;
+}
+
+.case.opened {
+  border-color: #ffd700;
+  background: linear-gradient(145deg, #704214, #a67c00);
+  color: #fffacd;
+  box-shadow: 0 0 15px #ffdb58;
+  cursor: zoom-in;
+}
+
+.case:hover:not(.opened) {
+  box-shadow: 0 0 20px #33ff33;
+  transform: scale(1.05);
+}
+
+.case.expanding {
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  margin: -200px 0 0 -200px;
+  background: #111;
+  border-radius: 15px;
+  box-shadow: 0 0 40px #7fff00;
+  animation: expandZoom 0.4s forwards;
+}
+
+@keyframes expandZoom {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    filter: none;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.2);
+    filter: drop-shadow(0 0 10px #7fff00);
+  }
+}
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+}
+
+#modal.hidden {
+  display: none;
+}
+
+#modal-content {
+  background: #222;
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 0 25px #33dd33;
+  text-align: center;
+  color: #dfdfdf;
+}
+
+#modal-content img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+#close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 2.2rem;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+#warning-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 30, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1300;
+}
+
+#warning-modal.hidden {
+  display: none;
+}
+
+#warning-content {
+  background: #440000;
+  border: 3px solid #ff5555;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 350px;
+  text-align: center;
+  box-shadow: 0 0 20px #ff4444;
+  color: #ffdddd;
+}
+
+#warning-content img {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+#close-warning {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #ffdddd;
+  cursor: pointer;
+  user-select: none;
+}
+
+#music-control {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1500;
+}
+
+#toggle-music {
+  background: #228822cc;
+  border: 2px solid #55aa55;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  padding: 10px 14px;
+  color: #eefeea;
+  cursor: pointer;
+  box-shadow: 0 0 10px #55aa55;
+  user-select: none;
+}
+
+#toggle-music:hover {
+  background: #33bb33cc;
+  box-shadow: 0 0 20px #77ff77;
+}
+
+/* Efecto nieve */
+
+#snow-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 500;
+}
+.snowflake {
+  position: absolute;
+  top: -10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 2px #eef);
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}

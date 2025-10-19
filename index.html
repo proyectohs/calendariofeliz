@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calendario de Adviento Interactivo</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="calendar-container">
+  <div id="snow-container"></div>
+  <div id="calendar-grid"></div>
+</div>
+
+<!-- Modal para premio-->
+<div id="modal" class="hidden">
+  <div id="modal-content">
+    <button id="close-modal" aria-label="Cerrar premiación">×</button>
+    <img id="modal-img" src="" alt="Premio" />
+    <p id="modal-desc"></p>
+  </div>
+</div>
+
+<!-- Modal alerta al abrir casilla fuera de día -->
+<div id="warning-modal" class="hidden">
+  <div id="warning-content">
+    <button id="close-warning" aria-label="Cerrar advertencia">×</button>
+    <img id="warning-gif" src="images/advertencia.gif" alt="Advertencia" />
+    <p>¡Hey! Sólo puedes abrir la casilla del día actual o anteriores.</p>
+  </div>
+</div>
+
+<!-- Control música -->
+<div id="music-control">
+  <button id="toggle-music" aria-label="Activar/Desactivar música">🎵</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
