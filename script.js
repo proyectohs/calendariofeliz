@@ -12,11 +12,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const musicControlBtn = document.getElementById('toggle-music');
   
-  let musicPlaying = true;
+  let musicPlaying = false;
   const music = new Audio('audio/musica.mp3');
   music.loop = true;
   music.volume = 0.3;
-  music.play().catch(() => { /* Autoplay puede requerir interacción del usuario */ });
+
+  // Reproducir música tras primer clic del usuario (por autoplay policies)
+  document.addEventListener('click', () => {
+    if (!musicPlaying) {
+      music.play().catch(() => {});
+      musicPlaying = true;
+      musicControlBtn.textContent = '🎵';
+    }
+  }, { once: true });
 
   musicControlBtn.addEventListener('click', () => {
     if(musicPlaying){
@@ -30,17 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Cierra modales
+  // Cierra modal premio
   closeModalBtn.addEventListener('click', () => {
     modal.classList.add('hidden');
   });
 
+  // Cierra modal advertencia
   closeWarningBtn.addEventListener('click', () => {
     warningModal.classList.add('hidden');
   });
 
   // Carga datos de premios
-  fetch('data/premios.json')
+  fetch('./data/premios.json')
     .then(response => response.json())
     .then(data => {
       createCases(data.premios);
@@ -71,28 +80,40 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       div.addEventListener('click', () => {
-        // Advertencia si intento abrir casilla futura
+        // Si la casilla del día futuro, muestro advertencia humorística y luego abro la casilla
         if (caseNumber > dayToday) {
           warningModal.classList.remove('hidden');
-          return;
+          
+          setTimeout(() => {
+            warningModal.classList.add('hidden');
+            openCase(div, premio, caseNumber);
+          }, 3000);
+          
+          return; // Pauso ejecución mientras el aviso está visible
         }
 
-        if (!div.classList.contains('opened')) {
-          div.classList.add('opened');
-          localStorage.setItem(`adviento_${caseNumber}_opened`, 'true');
-          div.style.backgroundImage = `url(${premio.imagen})`;
-          div.textContent = '';
-          div.style.backgroundSize = 'cover';
-          div.style.backgroundPosition = 'center';
-        }
-
-        openModal(premio);
+        // Apertura estándar si día actual o pasado
+        openCase(div, premio, caseNumber);
       });
 
       calendarGrid.appendChild(div);
     });
   }
 
+  // Función que abre la casilla y el modal
+  function openCase(div, premio, caseNumber) {
+    if (!div.classList.contains('opened')) {
+      div.classList.add('opened');
+      localStorage.setItem(`adviento_${caseNumber}_opened`, 'true');
+      div.style.backgroundImage = `url(${premio.imagen})`;
+      div.textContent = '';
+      div.style.backgroundSize = 'cover';
+      div.style.backgroundPosition = 'center';
+    }
+    openModal(premio);
+  }
+
+  // Abre modal de premio con imagen y descripción
   function openModal(premio) {
     modalImg.src = premio.imagen;
     modalImg.alt = premio.descripcion;
