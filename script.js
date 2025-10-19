@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalDesc = document.getElementById('modal-desc');
   const closeModalBtn = document.getElementById('close-modal');
 
-  const warningModal = document.getElementById('warning-modal');
-  const closeWarningBtn = document.getElementById('close-warning');
-
   const musicControlBtn = document.getElementById('toggle-music');
   
   let musicPlaying = false;
@@ -17,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   music.loop = true;
   music.volume = 0.3;
 
-  // Reproducir música tras primer clic del usuario (por autoplay policies)
   document.addEventListener('click', () => {
     if (!musicPlaying) {
       music.play().catch(() => {});
@@ -38,17 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Cierra modal premio
   closeModalBtn.addEventListener('click', () => {
     modal.classList.add('hidden');
   });
 
-  // Cierra modal advertencia
-  closeWarningBtn.addEventListener('click', () => {
-    warningModal.classList.add('hidden');
-  });
-
-  // Carga datos de premios
   fetch('./data/premios.json')
     .then(response => response.json())
     .then(data => {
@@ -60,9 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   function createCases(premios) {
-    const today = new Date();
-    const dayToday = today.getDate();
-
     premios.forEach((premio, index) => {
       const caseNumber = index + 1;
 
@@ -70,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
       div.classList.add('case');
       div.textContent = caseNumber;
 
-      // Marcar si abierto (guardado en localStorage)
       if(localStorage.getItem(`adviento_${caseNumber}_opened`) === 'true') {
         div.classList.add('opened');
         div.style.backgroundImage = `url(${premio.imagen})`;
@@ -80,19 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       div.addEventListener('click', () => {
-        // Si la casilla del día futuro, muestro advertencia humorística y luego abro la casilla
-        if (caseNumber > dayToday) {
-          warningModal.classList.remove('hidden');
-          
-          setTimeout(() => {
-            warningModal.classList.add('hidden');
-            openCase(div, premio, caseNumber);
-          }, 3000);
-          
-          return; // Pauso ejecución mientras el aviso está visible
-        }
-
-        // Apertura estándar si día actual o pasado
         openCase(div, premio, caseNumber);
       });
 
@@ -100,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Función que abre la casilla y el modal
   function openCase(div, premio, caseNumber) {
     if (!div.classList.contains('opened')) {
       div.classList.add('opened');
@@ -113,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     openModal(premio);
   }
 
-  // Abre modal de premio con imagen y descripción
   function openModal(premio) {
     modalImg.src = premio.imagen;
     modalImg.alt = premio.descripcion;
@@ -121,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('hidden');
   }
 
-  // Efecto nieve
   const snowContainer = document.getElementById('snow-container');
 
   function createSnowflake() {
