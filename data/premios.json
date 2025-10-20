@@ -29,7 +29,7 @@
       "descripcion": "Día de peluquería para quedar bien facherita"
     },
     {
-      "imagen": "images/8.png",
+      "imagen": "images/8.jpg",
       "descripcion": "Vale para un sushi variadito"
     },
     {
@@ -37,7 +37,7 @@
       "descripcion": "Nevara y pack de productos mini"
     },
     {
-      "imagen": "images/10.jpeg",
+      "imagen": "images/10.jpg",
       "descripcion": "Hoy eres la reina de la casa. Te hacen la comida"
     },
     {
@@ -100,3 +100,4 @@
     
   ]
 }
+
